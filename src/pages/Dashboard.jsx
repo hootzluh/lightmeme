@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react"
 import { useAccount, usePublicClient, useReadContract } from "wagmi"
 import { formatEther, parseEther } from "viem"
+import { Link } from "react-router-dom"
 import PageLayout from "../components/PageLayout"
 import WalletButton from "../components/WalletButton"
 import TokenSwap from "../components/TokenSwap"
@@ -289,30 +290,30 @@ export default function Dashboard() {
         <div className="quick-actions">
           <h2>Quick Actions</h2>
           <div className="actions-grid">
-            <div className="action-card">
+            <Link to="/create-token" className="action-card">
               <div className="action-icon">🚀</div>
               <h3>Create Token</h3>
               <p>Launch a new meme coin in minutes</p>
               <button className="action-btn primary">Create Now</button>
-            </div>
-            <div className="action-card">
+            </Link>
+            <Link to="/launch-presale" className="action-card">
               <div className="action-icon">📈</div>
               <h3>Launch Presale</h3>
               <p>Start a presale for your token</p>
               <button className="action-btn primary">Launch Presale</button>
-            </div>
-            <div className="action-card">
+            </Link>
+            <Link to="/analytics" className="action-card">
               <div className="action-icon">📊</div>
               <h3>Analytics</h3>
               <p>View detailed token analytics</p>
               <button className="action-btn primary">View Analytics</button>
-            </div>
-            <div className="action-card">
+            </Link>
+            <Link to="/live-stream" className="action-card">
               <div className="action-icon">🎥</div>
               <h3>Go Live</h3>
               <p>Start a live stream for your community</p>
               <button className="action-btn primary">Start Stream</button>
-            </div>
+            </Link>
           </div>
         </div>
       </div>

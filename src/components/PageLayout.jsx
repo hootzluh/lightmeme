@@ -241,6 +241,8 @@ export default function PageLayout({ children }) {
             </div>
             {activeDropdown === 'marketplace' && (
               <div className="nav-dropdown marketplace-dropdown">
+                <Link to="/marketplace" className="dropdown-item" onClick={handleDropdownItemClick}>Marketplace</Link>
+                <Link to="/liquidity-pools" className="dropdown-item" onClick={handleDropdownItemClick}>Liquidity Pools</Link>
                 <Link to="/buy-sell" className="dropdown-item" onClick={handleDropdownItemClick}>Buy/Sell</Link>
                 <Link to="/send-receive" className="dropdown-item" onClick={handleDropdownItemClick}>Send/Receive</Link>
                 <Link to="/stake" className="dropdown-item" onClick={handleDropdownItemClick}>Stake</Link>
@@ -258,9 +260,11 @@ export default function PageLayout({ children }) {
             </div>
             {activeDropdown === 'community' && (
               <div className="nav-dropdown community-dropdown">
+                <Link to="/live-chat" className="dropdown-item" onClick={handleDropdownItemClick}>Live Chat</Link>
+                <Link to="/direct-chat" className="dropdown-item" onClick={handleDropdownItemClick}>Direct Messages</Link>
+                <Link to="/live-stream" className="dropdown-item" onClick={handleDropdownItemClick}>Live Stream</Link>
                 <button className="dropdown-item disabled">Blog</button>
                 <button className="dropdown-item disabled">Forum</button>
-                <button className="dropdown-item disabled">Live Stream</button>
               </div>
             )}
           </div>
@@ -268,17 +272,31 @@ export default function PageLayout({ children }) {
       </div>
 
       <div className="wallet-cta-fixed">
-        {/* Top Row: Day/Night, Notifications, Settings */}
+        {/* Top Row: Settings, Notifications, Day/Night */}
         <div className="nav-controls-top">
-          {/* Day/Night Toggle Button - Top Right */}
-          <button 
-            className={`day-night-button ${isDayMode ? 'day-mode' : 'night-mode'}`}
-            onClick={handleDayNightToggle}
-            disabled
-            title={isDayMode ? 'Switch to Night Mode' : 'Switch to Day Mode'}
+          {/* Settings Button - Left */}
+          <div 
+            ref={settingsRef}
+            className="settings-container"
+            onMouseEnter={handleSettingsHover}
+            onMouseLeave={handleSettingsLeave}
           >
-            {isDayMode ? <Sun size={20} /> : <Moon size={20} />}
-          </button>
+            <button 
+              className={`settings-button ${settingsHovered || settingsOpen ? 'text-visible' : ''} ${settingsOpen ? 'active' : ''}`}
+              onClick={handleSettingsClick}
+            >
+              <span className={`settings-text ${settingsHovered || settingsOpen ? 'show' : ''}`}>Settings</span>
+              <Settings size={20} />
+            </button>
+            {settingsOpen && (
+              <div className="settings-dropdown">
+                <Link to="/account-settings" className="dropdown-item" onClick={() => setSettingsOpen(false)}>Account Settings</Link>
+                <Link to="/notifications" className="dropdown-item" onClick={() => setSettingsOpen(false)}>Notifications</Link>
+                <Link to="/security" className="dropdown-item" onClick={() => setSettingsOpen(false)}>Security</Link>
+                <Link to="/preferences" className="dropdown-item" onClick={() => setSettingsOpen(false)}>Preferences</Link>
+              </div>
+            )}
+          </div>
 
           {/* Notifications Button - Middle */}
           <div 
@@ -332,29 +350,15 @@ export default function PageLayout({ children }) {
             )}
           </div>
 
-          {/* Settings Button - Left */}
-          <div 
-            ref={settingsRef}
-            className="settings-container"
-            onMouseEnter={handleSettingsHover}
-            onMouseLeave={handleSettingsLeave}
+          {/* Day/Night Toggle Button - Top Right */}
+          <button 
+            className={`day-night-button ${isDayMode ? 'day-mode' : 'night-mode'}`}
+            onClick={handleDayNightToggle}
+            disabled
+            title={isDayMode ? 'Switch to Night Mode' : 'Switch to Day Mode'}
           >
-            <button 
-              className={`settings-button ${settingsHovered || settingsOpen ? 'text-visible' : ''} ${settingsOpen ? 'active' : ''}`}
-              onClick={handleSettingsClick}
-            >
-              <span className={`settings-text ${settingsHovered || settingsOpen ? 'show' : ''}`}>Settings</span>
-              <Settings size={20} />
-            </button>
-            {settingsOpen && (
-              <div className="settings-dropdown">
-                <Link to="/account-settings" className="dropdown-item" onClick={() => setSettingsOpen(false)}>Account Settings</Link>
-                <Link to="/notifications" className="dropdown-item" onClick={() => setSettingsOpen(false)}>Notifications</Link>
-                <Link to="/security" className="dropdown-item" onClick={() => setSettingsOpen(false)}>Security</Link>
-                <Link to="/preferences" className="dropdown-item" onClick={() => setSettingsOpen(false)}>Preferences</Link>
-              </div>
-            )}
-          </div>
+            {isDayMode ? <Sun size={20} /> : <Moon size={20} />}
+          </button>
         </div>
 
         {/* Bottom Row: Wallet Connect Button */}

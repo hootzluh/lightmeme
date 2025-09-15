@@ -14,6 +14,11 @@ import Notifications from "./pages/Notifications"
 import Security from "./pages/Security"
 import Preferences from "./pages/Preferences"
 import TokenManagement from "./pages/TokenManagement"
+import LiveChat from "./pages/LiveChat"
+import DirectChat from "./pages/DirectChat"
+import LiveStream from "./pages/LiveStream"
+import Marketplace from "./pages/Marketplace"
+import LiquidityPools from "./pages/LiquidityPools"
 import './styles/global.css'
 
 function App() {
@@ -34,6 +39,11 @@ function App() {
         <Route path="/security" element={<Security />} />
         <Route path="/preferences" element={<Preferences />} />
         <Route path="/token-management" element={<TokenManagement />} />
+        <Route path="/live-chat" element={<LiveChat />} />
+        <Route path="/direct-chat" element={<DirectChat />} />
+        <Route path="/live-stream" element={<LiveStream />} />
+        <Route path="/marketplace" element={<Marketplace />} />
+        <Route path="/liquidity-pools" element={<LiquidityPools />} />
       </Routes>
     </Router>
   )
