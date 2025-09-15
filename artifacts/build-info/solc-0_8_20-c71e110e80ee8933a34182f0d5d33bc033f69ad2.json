@@ -1,0 +1,39 @@
+{
+  "_format": "hh3-sol-build-info-1",
+  "id": "solc-0_8_20-c71e110e80ee8933a34182f0d5d33bc033f69ad2",
+  "solcVersion": "0.8.20",
+  "solcLongVersion": "0.8.20+commit.a1b79de6",
+  "userSourceNameMap": {
+    "contracts/MemeTokenFactory.sol": "project/contracts/MemeTokenFactory.sol"
+  },
+  "input": {
+    "language": "Solidity",
+    "settings": {
+      "evmVersion": "shanghai",
+      "optimizer": {
+        "enabled": true,
+        "runs": 200
+      },
+      "outputSelection": {
+        "*": {
+          "": [
+            "ast"
+          ],
+          "*": [
+            "abi",
+            "evm.bytecode",
+            "evm.deployedBytecode",
+            "evm.methodIdentifiers",
+            "metadata"
+          ]
+        }
+      },
+      "remappings": []
+    },
+    "sources": {
+      "project/contracts/MemeTokenFactory.sol": {
+        "content": "// SPDX-License-Identifier: MIT\npragma solidity ^0.8.20;\n\n/// @title Minimal ERC20 implementation for launchpad deployments\n/// @notice Self-contained ERC20 with fixed supply minted at construction\ncontract LightERC20 {\n    // ERC20 events\n    event Transfer(address indexed from, address indexed to, uint256 value);\n    event Approval(address indexed owner, address indexed spender, uint256 value);\n\n    // ERC20 storage\n    string private _name;\n    string private _symbol;\n    uint8 private _decimals;\n    uint256 public totalSupply;\n\n    mapping(address => uint256) public balanceOf;\n    mapping(address => mapping(address => uint256)) public allowance;\n\n    constructor(\n        string memory name_,\n        string memory symbol_,\n        uint8 decimals_,\n        uint256 initialSupply_,\n        address initialOwner_\n    ) {\n        require(initialOwner_ != address(0), \"Owner=0\");\n        _name = name_;\n        _symbol = symbol_;\n        _decimals = decimals_;\n        _mint(initialOwner_, initialSupply_);\n    }\n\n    // ERC20 metadata\n    function name() external view returns (string memory) { return _name; }\n    function symbol() external view returns (string memory) { return _symbol; }\n    function decimals() external view returns (uint8) { return _decimals; }\n\n    // ERC20 core\n    function transfer(address to, uint256 value) external returns (bool) {\n        _transfer(msg.sender, to, value);\n        return true;\n    }\n\n    function approve(address spender, uint256 value) external returns (bool) {\n        _approve(msg.sender, spender, value);\n        return true;\n    }\n\n    function transferFrom(address from, address to, uint256 value) external returns (bool) {\n        uint256 allowed = allowance[from][msg.sender];\n        if (allowed != type(uint256).max) {\n            require(allowed >= value, \"ERC20: insufficient allowance\");\n            unchecked { allowance[from][msg.sender] = allowed - value; }\n        }\n        _transfer(from, to, value);\n        return true;\n    }\n\n    // Internals\n    function _transfer(address from, address to, uint256 value) internal {\n        require(from != address(0) && to != address(0), \"ERC20: zero address\");\n        uint256 fromBal = balanceOf[from];\n        require(fromBal >= value, \"ERC20: balance<value\");\n        unchecked {\n            balanceOf[from] = fromBal - value;\n            balanceOf[to] += value;\n        }\n        emit Transfer(from, to, value);\n    }\n\n    function _approve(address owner, address spender, uint256 value) internal {\n        require(owner != address(0) && spender != address(0), \"ERC20: zero address\");\n        allowance[owner][spender] = value;\n        emit Approval(owner, spender, value);\n    }\n\n    function _mint(address to, uint256 value) internal {\n        require(to != address(0), \"ERC20: mint to zero\");\n        totalSupply += value;\n        balanceOf[to] += value;\n        emit Transfer(address(0), to, value);\n    }\n}\n\n/// @title Meme Token Factory\n/// @notice Deploys LightERC20 tokens and indexes them for discovery\ncontract MemeTokenFactory {\n    /// @dev Emitted on each token deployment\n    event TokenCreated(\n        address indexed token,\n        address indexed owner,\n        string name,\n        string symbol,\n        uint8 decimals,\n        uint256 initialSupply,\n        uint256 index\n    );\n\n    address[] private _allTokens;\n    mapping(address => address[]) private _ownerToTokens;\n    mapping(address => address) public tokenToOwner; // token => owner\n    mapping(address => bool) public isTokenFromFactory;\n\n    /// @notice Deploy a new ERC20 token with fixed initial supply\n    /// @param name_ Token name\n    /// @param symbol_ Token symbol\n    /// @param decimals_ Token decimals (e.g., 18)\n    /// @param initialSupply_ Initial supply in smallest units (respecting decimals)\n    /// @param owner_ Recipient of initial supply; if zero, msg.sender is used\n    function createToken(\n        string calldata name_,\n        string calldata symbol_,\n        uint8 decimals_,\n        uint256 initialSupply_,\n        address owner_\n    ) external returns (address token) {\n        address finalOwner = owner_ == address(0) ? msg.sender : owner_;\n        token = address(new LightERC20(name_, symbol_, decimals_, initialSupply_, finalOwner));\n\n        isTokenFromFactory[token] = true;\n        tokenToOwner[token] = finalOwner;\n        _ownerToTokens[finalOwner].push(token);\n        _allTokens.push(token);\n\n        emit TokenCreated(\n            token,\n            finalOwner,\n            name_,\n            symbol_,\n            decimals_,\n            initialSupply_,\n            _allTokens.length - 1\n        );\n    }\n\n    /// @notice Total number of tokens created by the factory\n    function allTokensLength() external view returns (uint256) {\n        return _allTokens.length;\n    }\n\n    /// @notice Get token address by global index\n    function tokenAt(uint256 index) external view returns (address) {\n        require(index < _allTokens.length, \"index oob\");\n        return _allTokens[index];\n    }\n\n    /// @notice Return all token addresses (use with care if many)\n    function getAllTokens() external view returns (address[] memory) {\n        return _allTokens;\n    }\n\n    /// @notice Paged list of tokens for efficient UIs\n    function getTokens(uint256 offset, uint256 limit) external view returns (address[] memory page) {\n        uint256 len = _allTokens.length;\n        if (offset >= len) return new address[](0);\n        uint256 end = offset + limit;\n        if (end > len) end = len;\n        uint256 n = end - offset;\n        page = new address[](n);\n        for (uint256 i = 0; i < n; i++) {\n            page[i] = _allTokens[offset + i];\n        }\n    }\n\n    /// @notice Tokens created for a specific owner\n    function getTokensByOwner(address owner) external view returns (address[] memory) {\n        return _ownerToTokens[owner];\n    }\n}\n"
+      }
+    }
+  }
+}

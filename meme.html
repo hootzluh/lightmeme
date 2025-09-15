@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Arbutus&display=swap" rel="stylesheet">
+  <title>LightLaunch Animated Background</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      overflow: hidden;
+      background: linear-gradient(135deg, #1a0b2e, #2d1b3d, #4a1963);
+      height: 100vh;
+      position: relative;
+    }
+
+    .cosmic-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background:
+        radial-gradient(circle at 20% 80%, rgba(255, 193, 7, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(255, 87, 34, 0.4) 0%, transparent 50%),
+        radial-gradient(circle at 40% 40%, rgba(156, 39, 176, 0.4) 0%, transparent 50%),
+        radial-gradient(circle at 40% 40%, rgba(98, 5, 140, 0.9) 0%, transparent 50%);
+    }
+
+    .floating-orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(1px);
+      animation: float 20s infinite ease-in-out;
+      mix-blend-mode: screen;
+    }
+
+    .orb-1 {
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(circle, rgba(255, 193, 7, 0.6) 0%, rgba(255, 87, 34, 0.4) 40%, transparent 70%);
+      top: -100px;
+      left: -100px;
+      animation-delay: 0s;
+      animation-duration: 25s;
+    }
+
+    .orb-2 {
+      width: 200px;
+      height: 200px;
+      background: radial-gradient(circle, rgba(255, 87, 34, 0.7) 0%, rgba(233, 30, 99, 0.5) 50%, transparent 80%);
+      top: 60%;
+      right: -50px;
+      animation-delay: -5s;
+      animation-duration: 30s;
+    }
+
+    .orb-3 {
+      width: 250px;
+      height: 250px;
+      background: radial-gradient(circle, rgba(156, 39, 176, 0.5) 0%, rgba(103, 58, 183, 0.6) 60%, transparent 80%);
+      top: 30%;
+      left: 70%;
+      animation-delay: -10s;
+      animation-duration: 35s;
+    }
+
+    .orb-4 {
+      width: 150px;
+      height: 150px;
+      background: radial-gradient(circle, rgba(255, 193, 7, 0.8) 0%, rgba(255, 152, 0, 0.4) 70%, transparent 90%);
+      top: 80%;
+      left: 20%;
+      animation-delay: -15s;
+      animation-duration: 22s;
+    }
+
+    .orb-5 {
+      width: 180px;
+      height: 180px;
+      background: radial-gradient(circle, rgba(233, 30, 99, 0.6) 0%, rgba(156, 39, 176, 0.4) 60%, transparent 85%);
+      top: 10%;
+      left: 40%;
+      animation-delay: -8s;
+      animation-duration: 28s;
+    }
+
+    .orb-6 {
+      width: 120px;
+      height: 120px;
+      background: radial-gradient(circle, rgba(255, 152, 0, 0.7) 0%, rgba(255, 87, 34, 0.5) 50%, transparent 75%);
+      top: 70%;
+      right: 60%;
+      animation-delay: -20s;
+      animation-duration: 18s;
+    }
+
+    .wave-layer {
+      position: absolute;
+      width: 120%;
+      height: 120%;
+      background:
+        radial-gradient(ellipse 80% 50% at 50% 0%, rgba(255, 193, 7, 0.15) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 40% at 50% 100%, rgba(156, 39, 176, 0.2) 0%, transparent 70%);
+      animation: wave 15s ease-in-out infinite;
+      transform-origin: center;
+    }
+
+    .stars {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+    }
+
+    .star {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background: rgba(255, 255, 255, 0.8);
+      border-radius: 50%;
+      animation: twinkle 3s infinite ease-in-out;
+    }
+
+    .star:nth-child(1) {
+      top: 20%;
+      left: 15%;
+      animation-delay: 0s;
+    }
+
+    .star:nth-child(2) {
+      top: 40%;
+      left: 85%;
+      animation-delay: 1s;
+    }
+
+    .star:nth-child(3) {
+      top: 70%;
+      left: 25%;
+      animation-delay: 2s;
+    }
+
+    .star:nth-child(4) {
+      top: 15%;
+      left: 70%;
+      animation-delay: 0.5s;
+    }
+
+    .star:nth-child(5) {
+      top: 85%;
+      left: 60%;
+      animation-delay: 1.5s;
+    }
+
+    .star:nth-child(6) {
+      top: 30%;
+      left: 40%;
+      animation-delay: 2.5s;
+    }
+
+    .content-overlay {
+      position: absolute;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      color: white;
+      z-index: 10;
+    }
+
+    .logo {
+      margin: 1rem;
+
+    }
+
+    .demo-text {
+      /* font-family: "Arbutus", serif;
+      font-weight: 400;
+      font-size: 3rem;
+      font-weight: bold;
+      text-shadow: 0 0 20px rgba(255, 193, 7, 0.5);
+      text-shadow:
+                3px 3px 0px rgb(98, 5, 140),
+                6px 6px 0px #FF5722,
+                9px 9px 0px #E91E63,
+                0 0 30px rgba(255, 193, 7, 0.8);
+      margin-bottom: 1rem;
+      color: linear-gradient(45deg, #FFC107, #FF5722, #E91E63);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: comic-glow 2s ease-in-out infinite alternate; */
+      font-family: "Arbutus", serif;
+      font-size: 4rem;
+      font-weight: 400;
+      font-style: normal;
+      color: #FFC107;
+      text-shadow:
+        3px 3px 0px #000000,
+        6px 6px 0px #FF5722,
+        9px 9px 0px #E91E63,
+        0 0 30px rgba(255, 193, 7, 0.8);
+      letter-spacing: 2px;
+      position: relative;
+      animation: comic-glow 3s ease-in-out infinite alternate;
+    }
+
+    .demo-subtitle {
+      font-family: 'Arial', sans-serif;
+      font-size: 1.2rem;
+      opacity: 0.8;
+      text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    }
+
+    @keyframes comic-glow {
+      0% {
+        filter: drop-shadow(3px 3px 0 #000) drop-shadow(6px 6px 0 #FF5722) drop-shadow(9px 9px 0 #E91E63) drop-shadow(0 0 20px rgba(255, 193, 7, 0.6));
+        transform: scale(1);
+      }
+
+      100% {
+        filter: drop-shadow(3px 3px 0 #000) drop-shadow(6px 6px 0 #FF5722) drop-shadow(9px 9px 0 #E91E63) drop-shadow(0 0 60px rgba(255, 193, 7, 1));
+        transform: scale(1.05);
+      }
+    }
+
+    @keyframes comic-glow {
+      0% {
+        color: #FFC107;
+        text-shadow:
+          3px 3px 0px #000000,
+          6px 6px 0px #FF5722,
+          9px 9px 0px #E91E63,
+          0 0 30px rgba(255, 193, 7, 0.9);
+      }
+
+      100% {
+        color: #a722ff;
+        text-shadow:
+          3px 3px 0px #000000,
+          6px 6px 0px #E91E63,
+          9px 9px 0px #9C27B0,
+          0 0 40px rgba(255, 87, 34, 0.9);
+      }
+    }
+
+    @keyframes float {
+
+      0%,
+      100% {
+        transform: translate(0px, 0px) scale(1);
+      }
+
+      25% {
+        transform: translate(-50px, -30px) scale(1.1);
+      }
+
+      50% {
+        transform: translate(30px, -60px) scale(0.9);
+      }
+
+      75% {
+        transform: translate(-20px, 40px) scale(1.05);
+      }
+    }
+
+    @keyframes wave {
+
+      0%,
+      100% {
+        transform: rotate(0deg) scale(1);
+      }
+
+      50% {
+        transform: rotate(1deg) scale(1.02);
+      }
+    }
+
+    @keyframes twinkle {
+
+      0%,
+      100% {
+        opacity: 0.8;
+        transform: scale(1);
+      }
+
+      50% {
+        opacity: 0.3;
+        transform: scale(1.2);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .demo-text {
+        font-size: 2rem;
+      }
+
+      .demo-subtitle {
+        font-size: 1rem;
+      }
+
+      .floating-orb {
+        filter: blur(2px);
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="cosmic-bg"></div>
+  <div class="wave-layer"></div>
+
+  <div class="floating-orb orb-1"></div>
+  <div class="floating-orb orb-2"></div>
+  <div class="floating-orb orb-3"></div>
+  <div class="floating-orb orb-4"></div>
+  <div class="floating-orb orb-5"></div>
+  <div class="floating-orb orb-6"></div>
+
+  <div class="stars">
+    <div class="star"></div>
+    <div class="star"></div>
+    <div class="star"></div>
+    <div class="star"></div>
+    <div class="star"></div>
+    <div class="star"></div>
+  </div>
+
+  <div class="content-overlay">
+    <div class="demo-text">LightMeme</div> <img class="logo" src="lightmeme.png" alt="Lightmeme Logo" height="120px">
+    <div class="demo-text">Launchpad</div>
+    <div class="demo-subtitle">The Lightchain Meme Coin Launchpad</div>
+  </div>
+</body>
+
+</html>

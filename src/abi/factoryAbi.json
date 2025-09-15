@@ -1,0 +1,147 @@
+[
+  {
+    "type": "event",
+    "name": "TokenCreated",
+    "inputs": [
+      {
+        "name": "token",
+        "type": "address",
+        "indexed": true
+      },
+      {
+        "name": "owner",
+        "type": "address",
+        "indexed": true
+      },
+      {
+        "name": "name",
+        "type": "string",
+        "indexed": false
+      },
+      {
+        "name": "symbol",
+        "type": "string",
+        "indexed": false
+      },
+      {
+        "name": "decimals",
+        "type": "uint8",
+        "indexed": false
+      },
+      {
+        "name": "initialSupply",
+        "type": "uint256",
+        "indexed": false
+      },
+      {
+        "name": "index",
+        "type": "uint256",
+        "indexed": false
+      }
+    ],
+    "anonymous": false
+  },
+  {
+    "type": "function",
+    "name": "createToken",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "name": "name_",
+        "type": "string"
+      },
+      {
+        "name": "symbol_",
+        "type": "string"
+      },
+      {
+        "name": "decimals_",
+        "type": "uint8"
+      },
+      {
+        "name": "initialSupply_",
+        "type": "uint256"
+      },
+      {
+        "name": "owner_",
+        "type": "address"
+      }
+    ],
+    "outputs": [
+      {
+        "name": "token",
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "type": "function",
+    "name": "allTokensLength",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "type": "function",
+    "name": "tokenAt",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "uint256"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "type": "function",
+    "name": "getAllTokens",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address[]"
+      }
+    ]
+  },
+  {
+    "type": "function",
+    "name": "getTokens",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "uint256"
+      },
+      {
+        "type": "uint256"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "address[]"
+      }
+    ]
+  },
+  {
+    "type": "function",
+    "name": "getTokensByOwner",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "address[]"
+      }
+    ]
+  }
+]

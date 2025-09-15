@@ -1,0 +1,45 @@
+{
+  "name": "lightmeme-launchpad",
+  "private": true,
+  "version": "1.0.0",
+  "description": "A comprehensive meme coin launchpad built on Lightchain AI",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "lint": "eslint .",
+    "preview": "vite preview",
+    "hh": "hardhat",
+    "compile": "hardhat compile",
+    "deploy:local": "hardhat run scripts/deploy.js",
+    "deploy:testnet": "hardhat run scripts/deploy.js --network lightchainTestnet"
+  },
+  "dependencies": {
+    "@tanstack/react-query": "^5.87.4",
+    "@wagmi/connectors": "^5.9.9",
+    "@wagmi/core": "^2.20.3",
+    "animate.css": "^4.1.1",
+    "lucide-react": "^0.544.0",
+    "nvm": "^0.0.4",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1",
+    "react-router-dom": "^7.9.1",
+    "viem": "^2.37.5",
+    "wagmi": "^2.16.9"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.33.0",
+    "@nomicfoundation/hardhat-ethers": "^4.0.1",
+    "@types/react": "^19.1.10",
+    "@types/react-dom": "^19.1.7",
+    "@vitejs/plugin-react": "^5.0.0",
+    "dotenv": "^16.6.1",
+    "eslint": "^9.33.0",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "eslint-plugin-react-refresh": "^0.4.20",
+    "ethers": "^6.15.0",
+    "globals": "^16.3.0",
+    "hardhat": "^3.0.6",
+    "vite": "^7.1.2"
+  }
+}
